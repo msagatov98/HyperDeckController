@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HypecDeskController:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/HypecDeskController_jar</output-path>
+    <root id="archive" name="HypecDeskController.jar">
+      <element id="module-output" name="HypecDeskController" />
+    </root>
+  </artifact>
+</component>
