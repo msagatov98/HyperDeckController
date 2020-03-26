@@ -24,14 +24,13 @@ public class Client {
 
     private static void initialize() {
 
-        JFrame jFrame = new JFrame("HyperDeskController");
+        JFrame jFrame = new JFrame("HyperDeckController");
         jFrame.setLayout(null);
         jFrame.setVisible(true);
         jFrame.setResizable(false);
         jFrame.setSize(640, 480);
         jFrame.getContentPane().setBackground(Color.GRAY);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
 
         stopAll = new JButton("Stop All");
         recordAll = new JButton("Record All");
@@ -126,20 +125,11 @@ public class Client {
         initialize();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("res/config"))) {
-            String line = reader.readLine();
             int i = 0;
-            while (line != null) {
-                clients[i] = new Client(line);
-                line = reader.readLine();
-                i++;
+            while (reader.ready()) {
+                clients[i++] = new Client(reader.readLine());
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -160,7 +150,6 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(id + " created");
     }
 
     private String getId() {
@@ -178,15 +167,14 @@ public class Client {
             e.printStackTrace();
         } finally {
             out.flush();
-            out.close();
         }
     }
 
-    private static InputStream input;
-    BufferedReader reader;
 
-    private void info() {
+    /*private void info() {
         try {
+            InputStream input;
+            BufferedReader reader;
 
             out.println("clips get");
 
@@ -208,16 +196,15 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void record(String name) {
         try {
-            out.println("record: name: " + name);
+            if (name != null) out.println("record: name: " + name);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             out.flush();
-            out.close();
         }
     }
 }
