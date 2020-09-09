@@ -124,10 +124,17 @@ public class Client {
     public static void main(String[] args) {
         initialize();
 
+        String ar[] = null;
+
         try (BufferedReader reader = new BufferedReader(new FileReader("res/config"))) {
             int i = 0;
             while (reader.ready()) {
-                clients[i++] = new Client(reader.readLine());
+                ar = reader.readLine().split(";");
+
+                clients[i] = new Client(ar[0]);
+                jTextFieldFileName[i].setText(ar[1]);
+
+                i++;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -147,6 +154,7 @@ public class Client {
         try {
             socket = new Socket(this.id, 9993);
             out = new PrintWriter(socket.getOutputStream(), true);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,12 +179,12 @@ public class Client {
     }
 
 
-    /*private void info() {
+   /* private void info() {
         try {
             InputStream input;
             BufferedReader reader;
 
-            out.println("clips get");
+            out.println("transport info");
 
             input = socket.getInputStream();
 
@@ -201,6 +209,7 @@ public class Client {
     private void record(String name) {
         try {
             if (name != null) out.println("record: name: " + name);
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
